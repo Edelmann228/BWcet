@@ -36,3 +36,11 @@ def wcet(operations, processor):
         total += worst_case(operation, processor)
 
     return total
+def nondeterminism_ratio(operations, processor):
+    best_time = bcet(operations, processor)
+    worst_time = wcet(operations, processor)
+
+    if best_time == 0:
+        return 0.0
+
+    return worst_time / best_time
