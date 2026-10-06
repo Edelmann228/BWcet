@@ -29,3 +29,10 @@ def bcet(operations, processor):
         total += best_case(operation, processor)
 
     return total
+def wcet(operations, processor):
+    total = 0
+
+    for operation in operations:
+        total += worst_case(operation, processor)
+
+    return total
