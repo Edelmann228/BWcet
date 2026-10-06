@@ -85,3 +85,28 @@ def source_breakdown(operations, processor):
         branches += operation.branches * processor.branch_misprediction_penalty
 
     return memory, branches
+def print_operations(operations, processor):
+    print()
+    print(
+        f"{'Операция':<28}"
+        f"{'Тип':<22}"
+        f"{'Память':<10}"
+        f"{'Ветвления':<12}"
+        f"{'Лучшее':<10}"
+        f"{'Худшее':<10}"
+    )
+
+    print("-" * 92)
+
+    for operation in operations:
+        best = best_case(operation, processor)
+        worst = worst_case(operation, processor)
+
+        print(
+            f"{operation.name:<28}"
+            f"{operation.operation_type:<22}"
+            f"{operation.memory_accesses:<10}"
+            f"{operation.branches:<12}"
+            f"{best:<10}"
+            f"{worst:<10}"
+        )
