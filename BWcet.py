@@ -22,3 +22,10 @@ def worst_case(operation, processor):
     branch_penalty = operation.branches * processor.branch_misprediction_penalty
 
     return processor.base_cost + memory_penalty + branch_penalty
+def bcet(operations, processor):
+    total = 0
+
+    for operation in operations:
+        total += best_case(operation, processor)
+
+    return total
