@@ -110,3 +110,79 @@ def print_operations(operations, processor):
             f"{best:<10}"
             f"{worst:<10}"
         )
+def main():
+    filename = "pid_step.json"
+
+    processor, operations = load_data(filename)
+
+    print("=" * 92)
+    print("ОЦЕНКА WCET: ШАГ ПИД-РЕГУЛЯТОРА")
+    print("=" * 92)
+
+    print()
+    print("Модель процессора:")
+    print(
+        f"Базовая стоимость операции: "
+        f"{processor.base_cost} такт"
+    )
+    print(
+        f"Штраф промаха кэша: "
+        f"+{processor.cache_miss_penalty} тактов"
+    )
+    print(
+        f"Штраф ошибки предсказания перехода: "
+        f"+{processor.branch_misprediction_penalty} тактов"
+    )
+    print(
+        f"Дедлайн: "
+        f"{processor.deadline} тактов"
+    )
+
+    print()
+    print("Операции шага ПИД-регулятора:")
+    print_operations(operations, processor)
+
+    best_time = bcet(operations, processor)
+    worst_time = wcet(operations, processor)
+
+    ratio = nondeterminism_ratio(
+        operations,
+        processor
+    )
+
+    memory, branches = source_breakdown(
+        operations,
+        processor
+    )
+
+    print()
+    print("=" * 92)
+    print("РЕЗУЛЬТАТЫ")
+    print("=" * 92)
+
+    print(f"BCET: {best_time} тактов")
+    print(f"WCET: {worst_time} тактов")
+    print(f"Коэффициент недетерминизма: {ratio:.2f}")
+
+    print()
+    print("Вклад источников в WCET:")
+    print(f"Память: {memory} тактов")
+    print(f"Ветвления: {branches} тактов")
+
+    print()
+    print(f"Дедлайн: {processor.deadline} тактов")
+
+    if worst_time <= processor.deadline:
+        print(
+            "Вывод: программа укладывается "
+            "в дедлайн в худшем случае."
+        )
+    else:
+        print(
+            "Вывод: программа НЕ укладывается "
+            "в дедлайн в худшем случае."
+        )
+
+
+if __name__ == "__main__":
+    main()
