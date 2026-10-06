@@ -1,0 +1,59 @@
+{
+  "processor": {
+    "base_cost": 1,
+    "cache_miss_penalty": 20,
+    "branch_misprediction_penalty": 10,
+    "deadline": 100
+  },
+
+  "operations": [
+    {
+      "name": "Чтение уставки",
+      "type": "READ_SETPOINT",
+      "memory_accesses": 1,
+      "branches": 0
+    },
+    {
+      "name": "Чтение обратной связи",
+      "type": "READ_FEEDBACK",
+      "memory_accesses": 1,
+      "branches": 0
+    },
+    {
+      "name": "Вычисление ошибки",
+      "type": "ERROR_CALCULATION",
+      "memory_accesses": 0,
+      "branches": 0
+    },
+    {
+      "name": "Расчёт P-составляющей",
+      "type": "P_CALCULATION",
+      "memory_accesses": 0,
+      "branches": 0
+    },
+    {
+      "name": "Расчёт I-составляющей",
+      "type": "I_CALCULATION",
+      "memory_accesses": 0,
+      "branches": 1
+    },
+    {
+      "name": "Расчёт D-составляющей",
+      "type": "D_CALCULATION",
+      "memory_accesses": 0,
+      "branches": 0
+    },
+    {
+      "name": "Суммирование составляющих",
+      "type": "PID_SUM",
+      "memory_accesses": 0,
+      "branches": 1
+    },
+    {
+      "name": "Вывод на привод",
+      "type": "ACTUATOR_OUTPUT",
+      "memory_accesses": 1,
+      "branches": 0
+    }
+  ]
+}
