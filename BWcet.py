@@ -44,3 +44,12 @@ def nondeterminism_ratio(operations, processor):
         return 0.0
 
     return worst_time / best_time
+def source_breakdown(operations, processor):
+    memory = 0
+    branches = 0
+
+    for operation in operations:
+        memory += operation.memory_accesses * processor.cache_miss_penalty
+        branches += operation.branches * processor.branch_misprediction_penalty
+
+    return memory, branches
