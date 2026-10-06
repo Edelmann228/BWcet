@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
 
+import json
+
 @dataclass
 class Operation:
     name: str
@@ -15,6 +17,36 @@ class ProcessorModel:
     cache_miss_penalty: int
     branch_misprediction_penalty: int
     deadline: int
+
+def load_data(filename):
+    with open(filename, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    processor_data = data["processor"]
+
+    processor = ProcessorModel(
+        base_cost=processor_data["base_cost"],
+        cache_miss_penalty=processor_data["cache_miss_penalty"],
+        branch_misprediction_penalty=processor_data[
+            "branch_misprediction_penalty"
+        ],
+        deadline=processor_data["deadline"]
+    )
+
+    operations = []
+
+    for item in data["operations"]:
+        operation = Operation(
+            name=item["name"],
+            operation_type=item["type"],
+            memory_accesses=item["memory_accesses"],
+            branches=item["branches"]
+        )
+
+        operations.append(operation)
+
+    return processor, operations
+
 def best_case(operation, processor):
     return processor.base_cost
 def worst_case(operation, processor):
