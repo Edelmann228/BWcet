@@ -15,3 +15,5 @@ class ProcessorModel:
     cache_miss_penalty: int
     branch_misprediction_penalty: int
     deadline: int
+def best_case(operation, processor):
+    return processor.base_cost
